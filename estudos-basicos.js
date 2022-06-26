@@ -9,7 +9,7 @@ const saldoContas = [100, 200, 300, 400, 500, 1.99, 1000];
 
 const total = saldoContas.reduce((acumulador, valor) => acumulador + valor); 
 
-console.log(total);
+//console.log(total);
 
 // Definindo Bandeiras e suas cores em um Array
 // Uma matrix de 3 dimensões
@@ -33,8 +33,8 @@ frutas.shift(); // Remove o primeiro elemento do Array
 frutas.splice(2, 1); // Remove um elemento do Array
 frutas.splice(2, 1, 'Caquí'); // Substitui um elemento no Array
 
-console.table(frutas);
-console.log(frutas.length); // Retorna o tamanho do Array
+//console.table(frutas);
+//console.log(frutas.length); // Retorna o tamanho do Array
 
 // Usando o IndexOf e Includes para buscar elementos no Array
 
@@ -47,9 +47,9 @@ const redesSociais = [
 ];
 
 const tiktok = redesSociais.indexOf('Tiktok'); // Retorna o índice do elemento
-console.log(tiktok);
+//console.log(tiktok);
 
-console.log(redesSociais.includes('Tumblr')); // Retorna true ou false
+//console.log(redesSociais.includes('Tumblr')); // Retorna true ou false
 
 // Laços de repetição
 
@@ -89,20 +89,20 @@ const aPagarEmReais = [10, 20, 40, 100]
 const cotacaoDolar = 5;
 const aPagarEmDolar = aPagarEmReais.map(valor => valor * cotacaoDolar); // Retorna um novo Array
 
-console.table(aPagarEmDolar);
-console.table(aPagarEmReais);
+//console.table(aPagarEmDolar);
+//console.table(aPagarEmReais);
 
 const aPagarVanessa = aPagarEmReais.filter(valor => valor > 50);
 aPagarEmReais.find(valor => valor > 50); // Retorna o primeiro elemento que satisfaça a condição
 
 
-console.table(aPagarVanessa);
+//console.table(aPagarVanessa);
 
-const totalAPagar = aPagarEmReais.reduce( acumulador, valor => acumulador + valor); // Retorna o valor total
+const totalAPagar = aPagarEmReais.reduce((acumulador, valor) => acumulador + valor); // Retorna o valor total
 const contasBaixas = aPagarEmReais.every(valor => valor < 100); // Retorna true ou false
 const contasAlta = aPagarEmReais.some(valor => valor > 100); // Retorna true ou false se apenas um valor satisfaz a condição
 
-console.table(totalAPagar);
+//console.table(totalAPagar);
 
 // Fazendo a ordenagem do Array
 
@@ -125,8 +125,8 @@ const programador = { // Cria um objeto
     trabalhoDesde: '01/01/2020'
 }
 
-console.table(programador);
-console.log(programador.nome); // Retorna o valor do atributo
+//console.table(programador);
+//console.log(programador.nome); // Retorna o valor do atributo
 
 // Classes
 
@@ -183,7 +183,7 @@ class Fila {
         this.items.push(item);
     }
     dequeue() { // Remove o primeiro elemento do Array
-        if (this.isEmpty()) return undefined; // Retorna undefined se o Array estiver vazio
+        if (this.items) return undefined; // Retorna undefined se o Array estiver vazio
         return this.items.shift(); // Retorna o primeiro elemento do Array
     }
     peek() { // Retorna o primeiro elemento do Array
@@ -207,9 +207,9 @@ fila.enqueue('Audi');
 fila.enqueue('Mercedes');
 fila.enqueue('Volkswagen');
 
-console.table(fila.items);
-console.log(fila.front())
-console.log(fila.rear())
+// console.table(fila.items);
+// console.log(fila.front())
+// console.log(fila.rear())
 
 // Deques (Deck)
 
@@ -224,11 +224,11 @@ class Deque {
         return this.items.push(items);
     }
     deleteFront(items){ // Remove o primeiro elemento do Array
-        if (this.isEmpty()) return undefined; // Retorna undefined se o Array estiver vazio
+        if (this.items) return undefined; // Retorna undefined se o Array estiver vazio
         return this.items.shift();
     }
     deleteLast(items){ // Remove o último elemento do Array
-        if (this.isEmpty()) return undefined; // Retorna undefined se o Array estiver vazio
+        if (this.items) return undefined; // Retorna undefined se o Array estiver vazio
         return this.items.pop();
     }
 }
@@ -244,3 +244,97 @@ deque.deleteFront();
 deque.deleteLast();
 
 console.table(deque.items);
+
+// Listas Encadeadas
+
+class No {
+    constructor(elemento) {
+        this.elemento = elemento;
+        this.proximo = null;
+    }
+}
+
+class ListaEncadeada{
+    constructor(){ 
+        this.head = undefined  // Cabeça da lista
+    }
+    insertFirst(elemento){
+        const novoNo = new No(elemento); // Cria um novo nó
+        let atual 
+
+        if(!this.head){ // Se a lista estiver vazia
+            this.head = novoNo;
+        } else {
+            atual = this.head // Atual recebe a cabeça da lista
+            novoNo.proximo = atual
+            this.head = novoNo
+        }
+        return elemento;
+    }
+    insertLast (elemento){
+        const novoNo = new No(elemento); // Cria um novo nó
+        let atual 
+
+        if(!this.head){ // Se a lista estiver vazia
+            this.head = novoNo;
+        } else {
+            atual = this.head // Atual recebe a cabeça da lista
+            while(atual.proximo){
+                atual = atual.proximo
+            }
+            atual.proximo = novoNo
+        }
+        return elemento;
+    }
+    searchAt(posicao){ // Retorna o elemento na posição especificada
+        let atual = this.head;
+        for (let i = 0; i < posicao && atual; i++) { // Percorre a lista
+            atual = atual.proximo;
+        }
+        return atual;
+    }
+    insertAt (elemento, posicao){ // Adiciona um elemento na posição especificada
+        const novoNo = new No(elemento)
+        if (posicao == 0){ // Se a posição for 0
+            this.insertFirst(elemento)
+        } else { // Se não for 0
+            const anterior = this.searchAt(posicao - 1) // Busca o nó anterior
+            const atual = anterior.proximo // Atual recebe o próximo do nó anterior
+            novoNo.proximo = atual // O próximo do novo nó recebe o próximo do nó atual
+            anterior.proximo = novoNo // O próximo do nó anterior recebe o novo nó
+        }
+        return elemento;
+    }
+    traversal(){
+        if(!this.head){ // Se a lista estiver vazia
+            return undefined;
+        } else {
+            let atual = this.head; // Atual recebe a cabeça da lista
+            let elementosLista = []; // Array para armazenar os elementos da lista
+            while(atual){ // Enquanto atual for diferente de undefined
+                elementosLista.push(atual.elemento); // Adiciona o elemento do nó atual no array
+                atual = atual.proximo; // Atual recebe o próximo nó
+            }
+            return elementosLista;
+        }         
+    }
+}
+
+const trem = new ListaEncadeada();
+trem.insertFirst('Locomotiva');
+trem.insertLast('Vagão 1');
+trem.insertLast('Vagão 2');
+trem.insertLast('Vagão 3');
+
+console.log(trem.head);
+console.log(trem.searchAt(2));
+console.table(trem.traversal());
+
+// Conjunto (Sets)
+
+const meuConjunto = new Set();
+
+const times = ['São Paulo', 'Palmeiras', 'Corinthians', 'Santos', 'São Paulo'];
+const meuCampeonato = new Set(times);
+
+console.table(meuCampeonato);
