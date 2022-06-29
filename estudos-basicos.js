@@ -338,3 +338,74 @@ const times = ['São Paulo', 'Palmeiras', 'Corinthians', 'Santos', 'São Paulo']
 const meuCampeonato = new Set(times);
 
 console.table(meuCampeonato);
+
+const valoresConjunto =  meuCampeonato.values();
+console.table(valoresConjunto.next().value); 
+
+for ( let valor of valoresConjunto) { 
+    console.log(valor);
+}
+
+const entradas =  meuCampeonato.entries(); // Retorna um iterador
+
+for ( let entrada of entradas) {
+    console.log(entradas);
+}
+
+// Dicionários (Maps)
+
+const meuDicionario = new Map();
+
+meuDicionario.set('oi', 'Oi tudo bem?');
+meuDicionario.set('blz', 'Beleza');
+meuDicionario.set('vc', 'Você');
+
+console.table(meuDicionario);
+
+const palavra = meuDicionario.get('oi');
+console.log(palavra);
+
+// Tabelas Hash (Hash Tables)
+
+class HashTable {
+    constructor(){
+        this.table = new Array(127);
+        this.size = 0;
+    }
+
+    _hash(key){ // Função de hash
+        let hash = 0; 
+        for (let i = 0; i < key.length; i++) { // Percorre a string
+            hash += key.charCodeAt(i); // Adiciona o código ASCII do caractere na hash 
+        }
+        return hash % this.table.length; // Retorna o resto da divisão da hash pelo tamanho do array
+    }
+    put(key, value){
+        const index = this._hash(key) // Calcula o índice da tabela
+        this.table[index] = [key, value]; // Adiciona o valor na tabela
+        this.size++; // Incrementa o tamanho da tabela
+    }
+    get(key){
+        const index = this._hash(key) // Calcula o índice da tabela
+        return this.table[index]; // Retorna o valor da tabela
+    }
+    delete(key){
+        const index = this._hash(key)
+        if (this.table[index] && this.table[index].length){ // Se o índice não estiver vazio
+            this.table[index] = undefined; // Deleta o valor do índice
+            this.size--; // Decrementa o tamanho da tabela
+            return true
+        } else return false;
+    }
+    clear(key){
+        this.table = []
+        this.size = 0
+    }    
+}
+
+const meusContatos = new HashTable(); 
+meusContatos.put('Marcos', '4844864646')
+meusContatos.put('João', '48444544646')
+meusContatos.put('Maria', '5444694646')
+
+console.table(meusContatos.table);
